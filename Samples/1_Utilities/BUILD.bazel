@@ -1,0 +1,37 @@
+load("@rules_cuda//cuda:defs.bzl", "cuda_binary")
+
+cuda_binary(
+    name = "bandwidthTest",
+    srcs = ["bandwidthTest/bandwidthTest.cu"],
+    deps = [
+        "//Common:helpers",
+    ],
+)
+
+cc_binary(
+    name = "deviceQuery",
+    srcs = ["deviceQuery/deviceQuery.cpp"],
+    deps = [
+        "//Common:helpers",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+
+cc_binary(
+    name = "deviceQueryDrv",
+    srcs = ["deviceQueryDrv/deviceQueryDrv.cpp"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cuda",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cuda_binary(
+    name = "topologyQuery",
+    srcs = ["topologyQuery/topologyQuery.cu"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

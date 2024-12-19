@@ -1,0 +1,29 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# workspace(name = "cuda-samples")
+
+http_archive(
+    name = "FreeImage",
+    build_file = "//third_party/FreeImage:BUILD.bazel",
+    sha256 = "7dd22eeb95e967e541d864da8b3bc03e3050983f2de2cb1c09a60d28e679c6f2",
+    strip_prefix = "FreeImage-3.19.10",
+    urls = ["https://github.com/danoli3/FreeImage/archive/refs/tags/3.19.10.tar.gz"],
+)
+
+# http_archive(
+#     name = "rules_cuda",
+#     sha256 = "c92b334d769a07cd991b7675b2f6076b8b95cd3b28b14268a2f379f8baae58e0",
+#     strip_prefix = "rules_cuda-v0.2.3",
+#     urls = ["https://github.com/bazel-contrib/rules_cuda/releases/download/v0.2.3/rules_cuda-v0.2.3.tar.gz"],
+# )
+
+local_repository(
+    name = "rules_cuda",
+    path = "../rules_cuda",
+)
+
+load("@rules_cuda//cuda:repositories.bzl", "register_detected_cuda_toolchains", "rules_cuda_dependencies")
+
+rules_cuda_dependencies()
+
+register_detected_cuda_toolchains()

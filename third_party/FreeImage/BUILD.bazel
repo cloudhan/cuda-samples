@@ -1,0 +1,123 @@
+cc_library(
+    name = "ZLib",
+    srcs = glob([
+        "Source/ZLib/**/*.c",
+        "Source/ZLib/**/*.cpp",
+    ]),
+    hdrs = glob([
+        "Source/ZLib/**/*.h",
+        "Source/ZLib/**/*.hpp",
+    ]),
+    includes = ["Source/ZLib"],
+)
+
+cc_library(
+    name = "LibJPEG",
+    srcs = glob(
+        [
+            "Source/LibJPEG/**/*.c",
+            "Source/LibJPEG/**/*.cpp",
+        ],
+        exclude = [
+            "Source/LibJPEG/jmemmac.c",
+            "Source/LibJPEG/jmemdos.c",
+        ],
+    ),
+    hdrs = glob([
+        "Source/LibJPEG/**/*.h",
+        "Source/LibJPEG/**/*.hpp",
+    ]),
+    includes = ["Source/LibJPEG"],
+)
+
+cc_library(
+    name = "LibOpenJPEG",
+    srcs = glob(
+        [
+            "Source/LibOpenJPEG/**/*.c",
+            "Source/LibOpenJPEG/**/*.cpp",
+        ],
+        exclude = [
+            "Source/LibOpenJPEG/*_manager.c",
+        ],
+    ),
+    hdrs = glob([
+        "Source/LibOpenJPEG/**/*.h",
+        "Source/LibOpenJPEG/**/*.hpp",
+    ]),
+    includes = ["Source/LibOpenJPEG"],
+)
+
+cc_library(
+    name = "LibPNG",
+    srcs = glob(
+        [
+            "Source/LibPNG/**/*.c",
+            "Source/LibPNG/**/*.cpp",
+        ],
+        exclude = [
+            # "Source/LibPNG/*_manager.c",
+        ],
+    ),
+    hdrs = glob([
+        "Source/LibPNG/**/*.h",
+        "Source/LibPNG/**/*.hpp",
+    ]),
+    includes = ["Source/LibPNG"],
+    deps = [":ZLib"],
+)
+
+cc_library(
+    name = "LibTIFF4",
+    srcs = glob(
+        [
+            "Source/LibTIFF4/**/*.c",
+            "Source/LibTIFF4/**/*.cpp",
+        ],
+        exclude = [
+            "Source/LibTIFF4/tif_win32.c",
+            "Source/LibTIFF4/tif_wince.c",
+        ],
+    ),
+    hdrs = glob([
+        "Source/LibTIFF4/**/*.h",
+        "Source/LibTIFF4/**/*.hpp",
+    ]),
+    deps = [
+        ":LibJPEG",
+        ":ZLib",
+    ],
+)
+
+cc_library(
+    name = "FreeImage",
+    srcs = glob(
+        [
+            "Source/**/*.cpp",
+            "Source/**/*.c",
+        ],
+        exclude = [
+            "Source/Lib*/**",
+            "Source/ZLib/**",
+            "Source/OpenEXR/**",
+        ],
+    ) + ["Source/OpenEXR/Half/half.cpp"],
+    hdrs = glob([
+        "Source/**/*.h",
+        "Source/**/*.hpp",
+    ]),
+    copts = ["-DFREEIMAGE_LIB"],
+    includes = [
+        "Source",
+        "Source/LibRawLite",
+        "Source/Zlib",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":LibJPEG",
+        ":LibOpenJPEG",
+        ":LibPNG",
+        ":LibTIFF4",
+        ":ZLib",
+    ],
+)

@@ -184,7 +184,7 @@ int runTest(int argc, char **argv) {
   ray.origin = make_float3(0, 0, 2.0f);
   int2 dir = make_int2(dim.x - 1, dim.y - 1);
   ray.dir = make_float2((float)dir.x, (float)dir.y);
-  ray.length = max(abs(dir.x), abs(dir.y));
+  ray.length = std::max(abs(dir.x), abs(dir.y));
   ray.oneOverLength = 1.0f / ray.length;
 
   //////////////////////////////////////////////////////////////////////////////
