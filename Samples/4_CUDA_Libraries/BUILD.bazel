@@ -1,0 +1,533 @@
+load("@rules_cuda//cuda:defs.bzl", "cuda_binary")
+
+# FIXME: fix data dependencies
+
+cc_binary(
+    name = "batchCUBLAS",
+    srcs = [
+        "batchCUBLAS/batchCUBLAS.cpp",
+        "batchCUBLAS/batchCUBLAS.h",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cublas",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "batchedLabelMarkersAndLabelCompressionNPP",
+    srcs = [
+        "batchedLabelMarkersAndLabelCompressionNPP/batchedLabelMarkersAndLabelCompressionNPP.cpp",
+    ],
+    # data = glob(["batchedLabelMarkersAndLabelCompressionNPP/*.raw"]),
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:nppc",
+        "@local_cuda//:nppif",
+        "@local_cuda//:nppisu",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "boxFilterNPP",
+    srcs = ["boxFilterNPP/boxFilterNPP.cpp"],
+    deps = [
+        "//Common:UtilNpp",
+        "//Common:helpers",
+        "@FreeImage",
+        "@local_cuda//:nppc",
+        "@local_cuda//:nppi",
+        "@local_cuda//:npps",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "cannyEdgeDetectorNPP",
+    srcs = ["cannyEdgeDetectorNPP/cannyEdgeDetectorNPP.cpp"],
+    deps = [
+        "//Common:UtilNpp",
+        "//Common:helpers",
+        "@FreeImage",
+        "@local_cuda//:nppi",
+        "@local_cuda//:npps",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "conjugateGradient",
+    srcs = [
+        "conjugateGradient/main.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cublas",
+        "@local_cuda//:cusparse",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cuda_binary(
+    name = "conjugateGradientCudaGraphs",
+    srcs = [
+        "conjugateGradientCudaGraphs/conjugateGradientCudaGraphs.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cublas",
+        "@local_cuda//:cusparse",
+    ],
+)
+
+# NOTE: atomicAdd(double*, double) requires sm60 and above
+cuda_binary(
+    name = "conjugateGradientMultiBlockCG",
+    srcs = [
+        "conjugateGradientMultiBlockCG/conjugateGradientMultiBlockCG.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cublas",
+        "@local_cuda//:cusparse",
+    ],
+)
+
+# NOTE: atomicAdd(double*, double) requires sm60 and above
+cuda_binary(
+    name = "conjugateGradientMultiDeviceCG",
+    srcs = [
+        "conjugateGradientMultiDeviceCG/conjugateGradientMultiDeviceCG.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+    ],
+)
+
+cc_binary(
+    name = "conjugateGradientPrecond",
+    srcs = [
+        "conjugateGradientPrecond/main.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cublas",
+        "@local_cuda//:cusparse",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "conjugateGradientUM",
+    srcs = [
+        "conjugateGradientUM/main.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cublas",
+        "@local_cuda//:cusparse",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+# FIXME: what is nvsci?
+# cc_binary(
+#     name = "cudaNvSci",
+#     srcs = [
+#         "cudaNvSci/cudaNvSci.cpp",
+#         "cudaNvSci/cudaNvSci.h",
+#         "cudaNvSci/main.cpp",
+#     ],
+#     deps = [
+#         "//Common:helpers",
+#         "@rules_cuda//cuda:runtime",
+#     ],
+# )
+
+# cc_binary(
+#     name = "cudaNvSciNvMedia",
+#     srcs = [
+#         "cudaNvSciNvMedia/main.cpp",
+#         "cudaNvSciNvMedia/nvmedia_producer.cpp",
+#         "cudaNvSciNvMedia/nvsci_setup.cpp",
+#     ],
+#     deps = [
+#         "//Common:helpers",
+#         "@rules_cuda//cuda:runtime",
+#     ],
+# )
+
+# NOTE: dla not included in cudax
+# cuda_binary(
+#     name = "cuDLAErrorReporting",
+#     srcs = [
+#         "cuDLAErrorReporting/main.cu",
+#     ],
+#     deps = [
+#         "//Common:helpers",
+#     ],
+# )
+
+# cuda_binary(
+#     name = "cuDLAHybridMode",
+#     srcs = [
+#         "cuDLAHybridMode/main.cu",
+#     ],
+#     deps = [
+#         "//Common:helpers",
+#     ],
+# )
+
+# cuda_binary(
+#     name = "cuDLALayerwiseStatsHybrid",
+#     srcs = [
+#         "cuDLALayerwiseStatsHybrid/main.cu",
+#     ],
+#     deps = [
+#         "//Common:helpers",
+#     ],
+# )
+
+# cc_binary(
+#     name = "cuDLALayerwiseStatsStandalone",
+#     srcs = [
+#         "cuDLALayerwiseStatsStandalone/main.cpp",
+#     ],
+#     deps = [
+#         "//Common:helpers",
+#         "@rules_cuda//cuda:runtime",
+#     ],
+# )
+
+# cc_binary(
+#     name = "cuDLAStandaloneMode",
+#     srcs = [
+#         "cuDLAStandaloneMode/main.cpp",
+#     ],
+#     deps = [
+#         "//Common:helpers",
+#         "@rules_cuda//cuda:runtime",
+#     ],
+# )
+
+cc_binary(
+    name = "cuSolverDn_LinearSolver",
+    srcs = [
+        "cuSolverDn_LinearSolver/cuSolverDn_LinearSolver.cpp",
+        "cuSolverDn_LinearSolver/mmio.c",
+        "cuSolverDn_LinearSolver/mmio.h",
+        "cuSolverDn_LinearSolver/mmio_wrapper.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cublas",
+        "@local_cuda//:cusolver",
+        "@local_cuda//:cusparse",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "cuSolverRf",
+    srcs = [
+        "cuSolverRf/cuSolverRf.cpp",
+        "cuSolverRf/mmio.c",
+        "cuSolverRf/mmio.h",
+        "cuSolverRf/mmio_wrapper.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cusolver",
+        "@local_cuda//:cusparse",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "cuSolverSp_LinearSolver",
+    srcs = [
+        "cuSolverSp_LinearSolver/cuSolverSp_LinearSolver.cpp",
+        "cuSolverSp_LinearSolver/mmio.c",
+        "cuSolverSp_LinearSolver/mmio.h",
+        "cuSolverSp_LinearSolver/mmio_wrapper.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cusolver",
+        "@local_cuda//:cusparse",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "cuSolverSp_LowlevelCholesky",
+    srcs = [
+        "cuSolverSp_LowlevelCholesky/cuSolverSp_LowlevelCholesky.cpp",
+        "cuSolverSp_LowlevelCholesky/mmio.c",
+        "cuSolverSp_LowlevelCholesky/mmio.h",
+        "cuSolverSp_LowlevelCholesky/mmio_wrapper.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cusolver",
+        "@local_cuda//:cusparse",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "cuSolverSp_LowlevelQR",
+    srcs = [
+        "cuSolverSp_LowlevelQR/cuSolverSp_LowlevelQR.cpp",
+        "cuSolverSp_LowlevelQR/mmio.c",
+        "cuSolverSp_LowlevelQR/mmio.h",
+        "cuSolverSp_LowlevelQR/mmio_wrapper.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cusolver",
+        "@local_cuda//:cusparse",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "FilterBorderControlNPP",
+    srcs = ["FilterBorderControlNPP/FilterBorderControlNPP.cpp"],
+    deps = [
+        "//Common:UtilNpp",
+        "//Common:helpers",
+        "@FreeImage",
+        "@local_cuda//:nppi",
+        "@local_cuda//:npps",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "freeImageInteropNPP",
+    srcs = [
+        "freeImageInteropNPP/freeImageInteropNPP.cpp",
+    ],
+    deps = [
+        "//Common:UtilNpp",
+        "//Common:helpers",
+        "@FreeImage",
+        "@local_cuda//:nppi",
+        "@local_cuda//:npps",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "histEqualizationNPP",
+    srcs = [
+        "histEqualizationNPP/histEqualizationNPP.cpp",
+    ],
+    deps = [
+        "//Common:UtilNpp",
+        "//Common:helpers",
+        "@FreeImage",
+        "@local_cuda//:nppi",
+        "@local_cuda//:npps",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "jitLto",
+    srcs = [
+        "jitLto/jitLto.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cuda",
+        "@local_cuda//:nvjitlink",
+        "@local_cuda//:nvrtc",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cuda_binary(
+    name = "lineOfSight",
+    srcs = [
+        "lineOfSight/lineOfSight.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+    ],
+)
+
+cc_binary(
+    name = "matrixMulCUBLAS",
+    srcs = [
+        "matrixMulCUBLAS/matrixMulCUBLAS.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cublas",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "MersenneTwisterGP11213",
+    srcs = [
+        "MersenneTwisterGP11213/MersenneTwister.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:curand",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "nvJPEG",
+    srcs = [
+        "nvJPEG/nvJPEG.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:nvjpeg",
+        # "@local_cuda//:nvjpeg_static",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "nvJPEG_encoder",
+    srcs = [
+        "nvJPEG_encoder/nvJPEG_encoder.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:nvjpeg",
+        # "@local_cuda//:nvjpeg_static",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+# FIXME: system GL deps, header GL/gl.h
+# cc_binary(
+#     name = "oceanFFT",
+#     srcs = [
+#         "oceanFFT/oceanFFT.cpp",
+#     ],
+#     deps = [
+#         "//Common:helpers",
+#         "@rules_cuda//cuda:runtime",
+#     ],
+# )
+
+# FIXME: system GL deps, header GL/gl.h
+# cc_binary(
+#     name = "randomFog",
+#     srcs = [
+#         "randomFog/randomFog.cpp",
+#         "randomFog/rng.cpp",
+#     ],
+#     deps = [
+#         "//Common:helpers",
+#         "@rules_cuda//cuda:runtime",
+#     ],
+# )
+
+cc_binary(
+    name = "simpleCUBLAS",
+    srcs = [
+        "simpleCUBLAS/simpleCUBLAS.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cublas",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "simpleCUBLAS_LU",
+    srcs = [
+        "simpleCUBLAS_LU/simpleCUBLAS_LU.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cublas",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cc_binary(
+    name = "simpleCUBLASXT",
+    srcs = [
+        "simpleCUBLASXT/simpleCUBLASXT.cpp",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cublas",
+        "@rules_cuda//cuda:runtime",
+    ],
+)
+
+cuda_binary(
+    name = "simpleCUFFT",
+    srcs = [
+        "simpleCUFFT/simpleCUFFT.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cufft",
+    ],
+)
+
+cuda_binary(
+    name = "simpleCUFFT_2d_MGPU",
+    srcs = [
+        "simpleCUFFT_2d_MGPU/simpleCUFFT_2d_MGPU.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cufft",
+    ],
+)
+
+# FIXME: rdc with library
+# cuda_binary(
+#     name = "simpleCUFFT_callback",
+#     srcs = [
+#         "simpleCUFFT_callback/simpleCUFFT_callback.cu",
+#     ],
+#     rdc=1,
+#     deps = [
+#         "//Common:helpers",
+#         "@local_cuda//:cufft_static",
+#     ],
+# )
+
+cuda_binary(
+    name = "simpleCUFFT_MGPU",
+    srcs = [
+        "simpleCUFFT_MGPU/simpleCUFFT_MGPU.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:cufft",
+    ],
+)
+
+cc_binary(
+    name = "watershedSegmentationNPP",
+    srcs = [
+        "watershedSegmentationNPP/watershedSegmentationNPP.cpp",
+    ],
+    data = ["//Common:data"],
+    deps = [
+        "//Common:helpers",
+        "@local_cuda//:nppc",
+        "@local_cuda//:nppif",
+        "@local_cuda//:nppisu",
+        "@rules_cuda//cuda:runtime",
+    ],
+)

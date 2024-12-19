@@ -1,0 +1,9 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "FreeImage",
+    urls = ["https://github.com/danoli3/FreeImage/archive/refs/tags/3.19.10.tar.gz"],
+    sha256 = "7dd22eeb95e967e541d864da8b3bc03e3050983f2de2cb1c09a60d28e679c6f2",
+    strip_prefix = "FreeImage-3.19.10",
+    build_file = "//third_party/FreeImage:BUILD.bazel",
+)
