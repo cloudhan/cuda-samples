@@ -1,0 +1,58 @@
+load("@rules_cuda//cuda:defs.bzl", "cuda_binary")
+
+cuda_binary(
+    name = "alignedTypes",
+    srcs = [
+        "alignedTypes/alignedTypes.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+    ],
+)
+
+cuda_binary(
+    name = "cudaGraphsPerfScaling",
+    srcs = [
+        "cudaGraphsPerfScaling/cudaGraphPerfScaling.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:nvtx3",
+    ],
+)
+
+cuda_binary(
+    name = "LargeKernelParameter",
+    srcs = [
+        "LargeKernelParameter/LargeKernelParameter.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+    ],
+)
+
+cuda_binary(
+    name = "transpose",
+    srcs = [
+        "transpose/transpose.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:libcudacxx",
+    ],
+)
+
+cuda_binary(
+    name = "UnifiedMemoryPerf",
+    srcs = [
+        "UnifiedMemoryPerf/commonDefs.hpp",
+        "UnifiedMemoryPerf/commonKernels.cu",
+        "UnifiedMemoryPerf/commonKernels.hpp",
+        "UnifiedMemoryPerf/helperFunctions.cpp",
+        "UnifiedMemoryPerf/matrixMultiplyPerf.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@rules_cuda//cuda:runtime",
+    ],
+)

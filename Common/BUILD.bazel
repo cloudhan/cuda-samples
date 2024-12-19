@@ -1,0 +1,32 @@
+package(default_visibility = ["//:__subpackages__"])
+
+cc_library(
+    name = "helpers",
+    srcs = glob(
+        ["*.cpp"],
+        exclude = ["rendercheck*.cpp"],
+    ),
+    hdrs = glob(
+        [
+            "*.h",
+            "*.hxx",
+        ],
+        exclude = ["rendercheck*.h"],
+    ),
+    includes = ["."],
+)
+
+cc_library(
+    name = "UtilNpp",
+    hdrs = glob(["UtilNPP/*.h"]),
+    includes = ["UtilNPP"],
+    deps = ["@cuda//:npp"],
+)
+
+filegroup(
+    name = "data",
+    data = glob([
+        "data/*.raw",
+        "data/*.pgm",
+    ]),
+)

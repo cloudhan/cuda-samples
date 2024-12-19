@@ -4,3 +4,8 @@ build
 test
 settings.json
 launch.json
+
+.vscode/*
+
+bazel-*
+MODULE.bazel.lock
