@@ -22,8 +22,31 @@ local_repository(
     path = "../rules_cuda",
 )
 
-load("@rules_cuda//cuda:repositories.bzl", "register_detected_cuda_toolchains", "rules_cuda_dependencies")
+load("@rules_cuda//cuda:repositories.bzl", "cuda_redist_json", "rules_cuda_dependencies")
 
 rules_cuda_dependencies()
 
-register_detected_cuda_toolchains()
+cuda_redist_json(
+    name = "rules_cuda_redist_json",
+    components = [
+        "cccl",
+        "cudart",
+        "nvcc",
+        "cublas",
+        "curand",
+        "cufft",
+        "cusolver",
+        "cusparse",
+        "npp",
+        "nvrtc",
+        "nvjitlink",
+        "nvjpeg",
+    ],
+    # either or version or urls must be specified
+    version = "12.6.3",
+    # urls = ["https://developer.download.nvidia.com/compute/cuda/redist/redistrib_12.8.1.json"],
+)
+
+load("@rules_cuda_redist_json//:redist.bzl", "rules_cuda_components_and_toolchains")
+
+rules_cuda_components_and_toolchains(register_toolchains = True)
