@@ -22,8 +22,17 @@ local_repository(
     path = "../rules_cuda",
 )
 
-load("@rules_cuda//cuda:repositories.bzl", "rules_cuda_toolchains", "rules_cuda_dependencies")
+load("@rules_cuda//cuda:repositories.bzl", "cuda_redist_json", "rules_cuda_dependencies")
 
 rules_cuda_dependencies()
 
-rules_cuda_toolchains(register_toolchains = True)
+cuda_redist_json(
+    name = "rules_cuda_redist_json",
+    # either or version or urls must be specified
+    version = "13.0.2",
+    # urls = ["https://developer.download.nvidia.com/compute/cuda/redist/redistrib_13.0.2.json"],
+)
+
+load("@rules_cuda_redist_json//:redist.bzl", "rules_cuda_components_and_toolchains")
+
+rules_cuda_components_and_toolchains(register_toolchains = True)

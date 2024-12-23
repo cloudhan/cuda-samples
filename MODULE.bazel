@@ -1,6 +1,22 @@
-###############################################################################
-# Bazel now uses Bzlmod by default to manage external dependencies.
-# Please consider migrating your external dependencies from WORKSPACE to MODULE.bazel.
-#
-# For more details, please check https://github.com/bazelbuild/bazel/issues/18958
-###############################################################################
+# TODO: add bzlmod version of cuda_redist_json
+module(
+    name = "cuda-samples",
+    version = "0.0.0",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "rules_cuda", version = "0.2.3")
+local_path_override(
+    module_name = "rules_cuda",
+    path = "../rules_cuda",
+)
+
+cuda = use_extension("@rules_cuda//cuda:extensions.bzl", "toolchain")
+cuda.redist_json(
+    name = "rules_cuda_redist_json",
+    # either or version or urls must be specified
+    version = "13.0.2",
+    # urls = ["https://developer.download.nvidia.com/compute/cuda/redist/redistrib_13.0.2.json"],
+)
+cuda.toolkit(name = "cuda")
+use_repo(cuda, "cuda")
