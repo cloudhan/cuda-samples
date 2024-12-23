@@ -22,8 +22,27 @@ local_repository(
     path = "../rules_cuda",
 )
 
-load("@rules_cuda//cuda:repositories.bzl", "register_detected_cuda_toolchains", "rules_cuda_dependencies")
+load("@rules_cuda//cuda:repositories.bzl", "cuda_redist_json", "rules_cuda_dependencies")
 
 rules_cuda_dependencies()
 
-register_detected_cuda_toolchains()
+cuda_redist_json(
+    name = "rules_cuda_redist_json",
+    components = [
+        "cudart",
+        "nvcc",
+        "cublas",
+        "cufft",
+        "cusolver",
+        "cusparse",
+        "npp",
+        "nvrtc",
+        "nvjitlink",
+        "nvjpeg",
+    ],
+    version = "12.6.3",
+)
+
+load("@rules_cuda_redist_json//:redist.bzl", "rules_cuda_components_and_toolchains")
+
+rules_cuda_components_and_toolchains(register_toolchains = True)
