@@ -4,3 +4,6 @@ build
 test
 settings.json
 launch.json
+
+bazel-*
+MODULE.bazel.lock

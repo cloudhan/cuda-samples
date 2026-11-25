@@ -1,0 +1,23 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "BlackScholes_nvrtc",
+    cc_srcs = [
+        "BlackScholes.cpp",
+        "BlackScholes_gold.cpp",
+    ],
+    hdrs = [
+        "BlackScholes_kernel.cuh",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "BlackScholes_kernel.cuh",
+    ],
+    deps = [
+        "//Common:helpers",
+        "//bzl:nvrtc_builtins",
+        "@cuda//:cuda",
+        "@cuda//:nvrtc",
+    ],
+)

@@ -1,0 +1,29 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "binomialOptions_nvrtc",
+    cc_srcs = [
+        "binomialOptions.cpp",
+        "binomialOptions_gold.cpp",
+        "binomialOptions_gpu.cpp",
+    ],
+    hdrs = [
+        "binomialOptions_common.h",
+        "common_gpu_header.h",
+        "realtype.h",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "binomialOptions_common.h",
+        "binomialOptions_kernel.cu",
+        "common_gpu_header.h",
+        "realtype.h",
+    ],
+    deps = [
+        "//Common:helpers",
+        "//bzl:nvrtc_builtins",
+        "@cuda//:cuda",
+        "@cuda//:nvrtc",
+    ],
+)

@@ -1,0 +1,25 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "segmentationTreeThrust",
+    cu_srcs = [
+        "segmentationTree.cu",
+    ],
+    hdrs = [
+        "common.cuh",
+        "kernels.cuh",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "data/ref_00.ppm",
+        "data/ref_09.ppm",
+        "data/test.ppm",
+    ],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:thrust",
+    ],
+)

@@ -1,0 +1,21 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "scan",
+    cu_srcs = [
+        "scan.cu",
+    ],
+    cc_srcs = [
+        "main.cpp",
+        "scan_gold.cpp",
+    ],
+    hdrs = [
+        "scan_common.h",
+    ],
+    includes = ["."],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

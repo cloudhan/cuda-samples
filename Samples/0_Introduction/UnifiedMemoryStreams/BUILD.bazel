@@ -1,0 +1,17 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "UnifiedMemoryStreams",
+    cu_srcs = [
+        "UnifiedMemoryStreams.cu",
+    ],
+    includes = ["."],
+    rdc = True,
+    host_copts = ["-fopenmp"],
+    copts = ["--extended-lambda"],
+    linkopts = ["-fopenmp"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cublas",
+    ],
+)
