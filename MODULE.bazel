@@ -21,8 +21,14 @@ http_archive(
 )
 
 cuda = use_extension("@rules_cuda//cuda:extensions.bzl", "toolchain")
-cuda.toolkit(
-    name = "cuda",
-    toolkit_path = "",
+cuda.redist_json(
+    name = "rules_cuda_redist_json",
+    platforms = [
+        "linux-x86_64",
+        "linux-sbsa",
+        "windows-x86_64",
+    ],
+    version = "13.5.0",
 )
+cuda.toolkit(name = "cuda")
 use_repo(cuda, "cuda")
