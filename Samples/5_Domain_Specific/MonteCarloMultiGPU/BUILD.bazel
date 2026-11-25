@@ -1,0 +1,26 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "MonteCarloMultiGPU",
+    cu_srcs = [
+        "MonteCarlo_kernel.cu",
+    ],
+    cc_srcs = [
+        "MonteCarloMultiGPU.cpp",
+        "MonteCarlo_gold.cpp",
+        "multithreading.cpp",
+    ],
+    hdrs = [
+        "MonteCarlo_common.h",
+        "MonteCarlo_reduction.cuh",
+        "multithreading.h",
+        "realtype.h",
+    ],
+    includes = ["."],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:curand",
+    ],
+)

@@ -1,0 +1,42 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "eigenvalues",
+    cu_srcs = [
+        "bisect_large.cu",
+        "bisect_small.cu",
+        "main.cu",
+    ],
+    cc_srcs = [
+        "gerschgorin.cpp",
+        "matlab.cpp",
+    ],
+    hdrs = [
+        "bisect_kernel_large.cuh",
+        "bisect_kernel_large_multi.cuh",
+        "bisect_kernel_large_onei.cuh",
+        "bisect_kernel_small.cuh",
+        "bisect_large.cuh",
+        "bisect_small.cuh",
+        "config.h",
+        "gerschgorin.h",
+        "matlab.h",
+        "structs.h",
+        "util.h",
+    ],
+    textual_hdrs = [
+        "bisect_util.cu",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "data/diagonal.dat",
+        "data/reference.dat",
+        "data/superdiagonal.dat",
+    ],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

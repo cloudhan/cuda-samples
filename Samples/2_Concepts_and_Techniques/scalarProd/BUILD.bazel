@@ -1,0 +1,20 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "scalarProd",
+    cu_srcs = [
+        "scalarProd.cu",
+    ],
+    cc_srcs = [
+        "scalarProd_cpu.cpp",
+    ],
+    hdrs = [
+        "scalarProd_kernel.cuh",
+    ],
+    includes = ["."],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)
