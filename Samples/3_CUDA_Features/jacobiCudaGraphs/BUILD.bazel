@@ -1,0 +1,18 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "jacobiCudaGraphs",
+    cu_srcs = [
+        "jacobi.cu",
+    ],
+    cc_srcs = [
+        "main.cpp",
+    ],
+    hdrs = [
+        "jacobi.h",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

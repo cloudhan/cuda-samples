@@ -1,0 +1,31 @@
+load("//bzl:cuda_kernel.bzl", "cuda_kernel", "cuda_sample_binary")
+
+cuda_kernel(
+    name = "vectorAdd_kernel64_fatbin",
+    src = "vectorAdd_kernel.cu",
+    hdrs = [
+        "multidevicealloc_memmap.hpp",
+    ],
+    out = "vectorAdd_kernel64.fatbin",
+    mode = "fatbin",
+    deps = ["//Common:helpers"],
+)
+
+cuda_sample_binary(
+    name = "vectorAddMMAP",
+    cc_srcs = [
+        "multidevicealloc_memmap.cpp",
+        "vectorAddMMAP.cpp",
+    ],
+    hdrs = [
+        "multidevicealloc_memmap.hpp",
+    ],
+    includes = ["."],
+    data = [
+        ":vectorAdd_kernel64_fatbin",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cuda",
+    ],
+)

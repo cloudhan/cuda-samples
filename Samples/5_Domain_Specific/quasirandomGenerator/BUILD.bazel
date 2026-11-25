@@ -1,0 +1,19 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "quasirandomGenerator",
+    cu_srcs = [
+        "quasirandomGenerator_kernel.cu",
+    ],
+    cc_srcs = [
+        "quasirandomGenerator.cpp",
+        "quasirandomGenerator_gold.cpp",
+    ],
+    hdrs = [
+        "quasirandomGenerator_common.h",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

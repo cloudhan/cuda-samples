@@ -1,0 +1,18 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleAtomicIntrinsics",
+    cu_srcs = [
+        "simpleAtomicIntrinsics.cu",
+    ],
+    cc_srcs = [
+        "simpleAtomicIntrinsics_cpu.cpp",
+    ],
+    hdrs = [
+        "simpleAtomicIntrinsics_kernel.cuh",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

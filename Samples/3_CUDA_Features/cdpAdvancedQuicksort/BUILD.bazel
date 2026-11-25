@@ -1,0 +1,18 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "cdpAdvancedQuicksort",
+    cu_srcs = [
+        "cdpAdvancedQuicksort.cu",
+        "cdpBitonicSort.cu",
+    ],
+    hdrs = [
+        "cdpQuicksort.h",
+    ],
+    includes = ["."],
+    rdc = True,
+    deps = [
+        "//Common:helpers",
+        "@cuda//:thrust",
+    ],
+)

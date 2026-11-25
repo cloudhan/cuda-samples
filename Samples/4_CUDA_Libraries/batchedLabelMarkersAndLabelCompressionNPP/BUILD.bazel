@@ -1,0 +1,36 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "batchedLabelMarkersAndLabelCompressionNPP",
+    cc_srcs = [
+        "batchedLabelMarkersAndLabelCompressionNPP.cpp",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "CT_skull_CompressedMarkerLabelsUFBatch_8Way_512x512_32u.raw",
+        "CT_skull_CompressedMarkerLabelsUF_8Way_512x512_32u.raw",
+        "CT_skull_LabelMarkersUFBatch_8Way_512x512_32u.raw",
+        "CT_skull_LabelMarkersUF_8Way_512x512_32u.raw",
+        "PCB2_CompressedMarkerLabelsUFBatch_8Way_1024x683_32u.raw",
+        "PCB2_CompressedMarkerLabelsUF_8Way_1024x683_32u.raw",
+        "PCB2_LabelMarkersUFBatch_8Way_1024x683_32u.raw",
+        "PCB2_LabelMarkersUF_8Way_1024x683_32u.raw",
+        "PCB_CompressedMarkerLabelsUFBatch_8Way_1280x720_32u.raw",
+        "PCB_CompressedMarkerLabelsUF_8Way_1280x720_32u.raw",
+        "PCB_LabelMarkersUFBatch_8Way_1280x720_32u.raw",
+        "PCB_LabelMarkersUF_8Way_1280x720_32u.raw",
+        "PCB_METAL_CompressedMarkerLabelsUFBatch_8Way_509x335_32u.raw",
+        "PCB_METAL_CompressedMarkerLabelsUF_8Way_509x335_32u.raw",
+        "PCB_METAL_LabelMarkersUFBatch_8Way_509x335_32u.raw",
+        "PCB_METAL_LabelMarkersUF_8Way_509x335_32u.raw",
+        "teapot_CompressedMarkerLabelsUFBatch_8Way_512x512_32u.raw",
+        "teapot_CompressedMarkerLabelsUF_8Way_512x512_32u.raw",
+        "teapot_LabelMarkersUFBatch_8Way_512x512_32u.raw",
+        "teapot_LabelMarkersUF_8Way_512x512_32u.raw",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:npp",
+    ],
+)

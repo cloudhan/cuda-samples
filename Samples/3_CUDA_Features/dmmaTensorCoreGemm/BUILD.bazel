@@ -1,0 +1,13 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "dmmaTensorCoreGemm",
+    cu_srcs = [
+        "dmmaTensorCoreGemm.cu",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:libcudacxx",
+    ],
+)

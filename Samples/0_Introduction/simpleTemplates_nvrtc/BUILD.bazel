@@ -1,0 +1,23 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleTemplates_nvrtc",
+    cc_srcs = [
+        "simpleTemplates.cpp",
+    ],
+    hdrs = [
+        "sharedmem.cuh",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "sharedmem.cuh",
+        "simpleTemplates_kernel.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+        "//bzl:nvrtc_builtins",
+        "@cuda//:cuda",
+        "@cuda//:nvrtc",
+    ],
+)
