@@ -1,0 +1,16 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "threadFenceReduction",
+    cu_srcs = [
+        "threadFenceReduction.cu",
+    ],
+    hdrs = [
+        "threadFenceReduction.h",
+        "threadFenceReduction_kernel.cuh",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

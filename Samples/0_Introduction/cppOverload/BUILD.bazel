@@ -1,0 +1,15 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "cppOverload",
+    cu_srcs = [
+        "cppOverload.cu",
+    ],
+    hdrs = [
+        "cppOverload_kernel.cuh",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

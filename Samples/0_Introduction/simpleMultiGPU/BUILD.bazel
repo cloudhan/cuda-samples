@@ -1,0 +1,15 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleMultiGPU",
+    cu_srcs = [
+        "simpleMultiGPU.cu",
+    ],
+    hdrs = [
+        "simpleMultiGPU.h",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

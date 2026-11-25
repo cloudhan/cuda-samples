@@ -1,0 +1,22 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "dxtc",
+    cu_srcs = [
+        "dxtc.cu",
+    ],
+    hdrs = [
+        "CudaMath.h",
+        "dds.h",
+        "permutations.h",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "data/teapot512_ref.dds",
+        "data/teapot512_std.ppm",
+    ],
+    deps = [
+        "//Common:helpers",
+    ],
+)

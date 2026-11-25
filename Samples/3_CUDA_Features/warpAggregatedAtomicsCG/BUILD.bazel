@@ -1,0 +1,12 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "warpAggregatedAtomicsCG",
+    cu_srcs = [
+        "warpAggregatedAtomicsCG.cu",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

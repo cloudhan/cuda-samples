@@ -1,0 +1,16 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "batchedLabelMarkersAndLabelCompressionNPP",
+    cc_srcs = [
+        "batchedLabelMarkersAndLabelCompressionNPP.cpp",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:npp",
+    ],
+)

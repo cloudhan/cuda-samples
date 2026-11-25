@@ -1,0 +1,18 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleCallback",
+    cu_srcs = [
+        "simpleCallback.cu",
+    ],
+    cc_srcs = [
+        "multithreading.cpp",
+    ],
+    hdrs = [
+        "multithreading.h",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

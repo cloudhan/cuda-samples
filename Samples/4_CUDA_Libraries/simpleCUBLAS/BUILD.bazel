@@ -1,0 +1,13 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleCUBLAS",
+    cc_srcs = [
+        "simpleCUBLAS.cpp",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cublas",
+    ],
+)

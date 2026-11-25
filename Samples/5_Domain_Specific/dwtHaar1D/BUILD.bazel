@@ -1,0 +1,24 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "dwtHaar1D",
+    cu_srcs = [
+        "dwtHaar1D.cu",
+    ],
+    hdrs = [
+        "dwtHaar1D_kernel.cuh",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "data/regression.gold.dat",
+        "data/regression_2_14.gold.dat",
+        "data/regression_2_18.gold.dat",
+        "data/signal.dat",
+        "data/signal_2_14.dat",
+        "data/signal_2_18.dat",
+    ],
+    deps = [
+        "//Common:helpers",
+    ],
+)

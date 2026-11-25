@@ -1,0 +1,19 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "vectorAdd_nvrtc",
+    cc_srcs = [
+        "vectorAdd.cpp",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "vectorAdd_kernel.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+        "//bzl:nvrtc_builtins",
+        "@cuda//:cuda",
+        "@cuda//:nvrtc",
+    ],
+)

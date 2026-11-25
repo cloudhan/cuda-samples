@@ -1,0 +1,148 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "ZLib",
+    srcs = glob(
+        [
+            "Source/ZLib/**/*.c",
+            "Source/ZLib/**/*.cpp",
+        ],
+        allow_empty = True,
+    ),
+    hdrs = glob(
+        [
+            "Source/ZLib/**/*.h",
+            "Source/ZLib/**/*.hpp",
+        ],
+        allow_empty = True,
+    ),
+    includes = ["Source/ZLib"],
+)
+
+cc_library(
+    name = "LibJPEG",
+    srcs = glob(
+        [
+            "Source/LibJPEG/**/*.c",
+            "Source/LibJPEG/**/*.cpp",
+        ],
+        exclude = [
+            "Source/LibJPEG/jmemmac.c",
+            "Source/LibJPEG/jmemdos.c",
+        ],
+        allow_empty = True,
+    ),
+    hdrs = glob(
+        [
+            "Source/LibJPEG/**/*.h",
+            "Source/LibJPEG/**/*.hpp",
+        ],
+        allow_empty = True,
+    ),
+    includes = ["Source/LibJPEG"],
+)
+
+cc_library(
+    name = "LibOpenJPEG",
+    srcs = glob(
+        [
+            "Source/LibOpenJPEG/**/*.c",
+            "Source/LibOpenJPEG/**/*.cpp",
+        ],
+        exclude = [
+            "Source/LibOpenJPEG/*_manager.c",
+        ],
+        allow_empty = True,
+    ),
+    hdrs = glob(
+        [
+            "Source/LibOpenJPEG/**/*.h",
+            "Source/LibOpenJPEG/**/*.hpp",
+        ],
+        allow_empty = True,
+    ),
+    includes = ["Source/LibOpenJPEG"],
+)
+
+cc_library(
+    name = "LibPNG",
+    srcs = glob(
+        [
+            "Source/LibPNG/**/*.c",
+            "Source/LibPNG/**/*.cpp",
+        ],
+        allow_empty = True,
+    ),
+    hdrs = glob(
+        [
+            "Source/LibPNG/**/*.h",
+            "Source/LibPNG/**/*.hpp",
+        ],
+        allow_empty = True,
+    ),
+    includes = ["Source/LibPNG"],
+    deps = [":ZLib"],
+)
+
+cc_library(
+    name = "LibTIFF4",
+    srcs = glob(
+        [
+            "Source/LibTIFF4/**/*.c",
+            "Source/LibTIFF4/**/*.cpp",
+        ],
+        exclude = [
+            "Source/LibTIFF4/tif_win32.c",
+            "Source/LibTIFF4/tif_wince.c",
+        ],
+        allow_empty = True,
+    ),
+    hdrs = glob(
+        [
+            "Source/LibTIFF4/**/*.h",
+            "Source/LibTIFF4/**/*.hpp",
+        ],
+        allow_empty = True,
+    ),
+    deps = [
+        ":LibJPEG",
+        ":ZLib",
+    ],
+)
+
+cc_library(
+    name = "FreeImage",
+    srcs = glob(
+        [
+            "Source/**/*.cpp",
+            "Source/**/*.c",
+        ],
+        exclude = [
+            "Source/Lib*/**",
+            "Source/ZLib/**",
+            "Source/OpenEXR/**",
+        ],
+        allow_empty = True,
+    ) + ["Source/OpenEXR/Half/half.cpp"],
+    hdrs = glob(
+        [
+            "Source/**/*.h",
+            "Source/**/*.hpp",
+        ],
+        allow_empty = True,
+    ),
+    alwayslink = True,
+    includes = [
+        "Source",
+        "Source/LibRawLite",
+        "Source/ZLib",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":LibJPEG",
+        ":LibOpenJPEG",
+        ":LibPNG",
+        ":LibTIFF4",
+        ":ZLib",
+    ],
+)

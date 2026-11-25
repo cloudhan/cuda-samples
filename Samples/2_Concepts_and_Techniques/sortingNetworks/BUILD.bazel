@@ -1,0 +1,21 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "sortingNetworks",
+    cu_srcs = [
+        "bitonicSort.cu",
+        "oddEvenMergeSort.cu",
+    ],
+    cc_srcs = [
+        "main.cpp",
+        "sortingNetworks_validate.cpp",
+    ],
+    hdrs = [
+        "sortingNetworks_common.cuh",
+        "sortingNetworks_common.h",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

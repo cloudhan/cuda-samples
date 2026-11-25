@@ -1,0 +1,25 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "cuSolverRf",
+    cc_srcs = [
+        "cuSolverRf.cpp",
+        "mmio.c",
+        "mmio_wrapper.cpp",
+    ],
+    hdrs = [
+        "mmio.h",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "lap2D_5pt_n100.mtx",
+        "lap3D_7pt_n20.mtx",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cublas",
+        "@cuda//:cusolver",
+        "@cuda//:cusparse",
+    ],
+)

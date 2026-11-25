@@ -1,0 +1,26 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "quasirandomGenerator_nvrtc",
+    cc_srcs = [
+        "quasirandomGenerator.cpp",
+        "quasirandomGenerator_gold.cpp",
+    ],
+    hdrs = [
+        "quasirandomGenerator_common.h",
+        "quasirandomGenerator_gpu.cuh",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "quasirandomGenerator_common.h",
+        "quasirandomGenerator_gpu.cuh",
+        "quasirandomGenerator_kernel.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+        "//bzl:nvrtc_builtins",
+        "@cuda//:cuda",
+        "@cuda//:nvrtc",
+    ],
+)

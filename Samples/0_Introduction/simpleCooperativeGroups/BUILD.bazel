@@ -1,0 +1,12 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleCooperativeGroups",
+    cu_srcs = [
+        "simpleCooperativeGroups.cu",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)
