@@ -1,0 +1,16 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "cubDeviceTransform",
+    cu_srcs = [
+        "cubDeviceTransform.cu",
+    ],
+    includes = ["."],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cub",
+        "@cuda//:thrust",
+    ],
+)

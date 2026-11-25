@@ -1,0 +1,16 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "libcuxxMdspan",
+    cu_srcs = [
+        "libcuxxMdspan.cu",
+    ],
+    includes = ["."],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:libcudacxx",
+        "@dlpack",
+    ],
+)

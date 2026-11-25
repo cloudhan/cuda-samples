@@ -9,3 +9,6 @@ launch.json
 __pycache__/
 *.py[co]
 .pytest_cache/
+
+bazel-*
+MODULE.bazel.lock

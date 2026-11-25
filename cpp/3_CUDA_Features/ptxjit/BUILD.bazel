@@ -1,0 +1,25 @@
+load("//bzl:cuda_kernel.bzl", "cuda_kernel", "cuda_sample_binary")
+
+cuda_kernel(
+    name = "ptxjit_kernel64_ptx",
+    src = "ptxjit_kernel.cu",
+    out = "ptxjit_kernel64.ptx",
+    mode = "ptx",
+    deps = ["//Common:helpers"],
+)
+
+cuda_sample_binary(
+    name = "ptxjit",
+    cc_srcs = [
+        "ptxjit.cpp",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        ":ptxjit_kernel64_ptx",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cuda",
+    ],
+)
