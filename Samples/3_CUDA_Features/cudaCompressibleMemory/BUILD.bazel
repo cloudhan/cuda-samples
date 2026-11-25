@@ -1,0 +1,21 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "cudaCompressibleMemory",
+    cu_srcs = [
+        "saxpy.cu",
+    ],
+    cc_srcs = [
+        "compMalloc.cpp",
+    ],
+    hdrs = [
+        "compMalloc.h",
+    ],
+    includes = ["."],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cuda",
+    ],
+)

@@ -1,0 +1,17 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleVoteIntrinsics",
+    cu_srcs = [
+        "simpleVoteIntrinsics.cu",
+    ],
+    hdrs = [
+        "simpleVote_kernel.cuh",
+    ],
+    includes = ["."],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

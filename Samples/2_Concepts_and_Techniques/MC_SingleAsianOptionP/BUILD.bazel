@@ -1,0 +1,25 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "MC_SingleAsianOptionP",
+    cu_srcs = [
+        "src/pricingengine.cu",
+    ],
+    cc_srcs = [
+        "src/main.cpp",
+        "src/test.cpp",
+    ],
+    hdrs = [
+        "inc/asianoption.h",
+        "inc/cudasharedmem.h",
+        "inc/pricingengine.h",
+        "inc/test.h",
+    ],
+    includes = [".", "inc", "src"],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:curand",
+    ],
+)

@@ -1,0 +1,23 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "mergeSort",
+    cu_srcs = [
+        "bitonic.cu",
+        "mergeSort.cu",
+    ],
+    cc_srcs = [
+        "main.cpp",
+        "mergeSort_host.cpp",
+        "mergeSort_validate.cpp",
+    ],
+    hdrs = [
+        "mergeSort_common.h",
+    ],
+    includes = ["."],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

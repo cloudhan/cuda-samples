@@ -1,0 +1,32 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "nvJPEG_encoder",
+    cc_srcs = [
+        "nvJPEG_encoder.cpp",
+    ],
+    includes = ["."],
+    data = [
+        "encode_output/img1.jpg",
+        "encode_output/img2.jpg",
+        "encode_output/img3.jpg",
+        "encode_output/img4.jpg",
+        "encode_output/img5.jpg",
+        "encode_output/img6.jpg",
+        "encode_output/img7.jpg",
+        "encode_output/img8.jpg",
+        "images/img1.jpg",
+        "images/img2.jpg",
+        "images/img3.jpg",
+        "images/img4.jpg",
+        "images/img5.jpg",
+        "images/img6.jpg",
+        "images/img7.jpg",
+        "images/img8.jpg",
+    ],
+    args = ["-i", "Samples/4_CUDA_Libraries/nvJPEG_encoder/images/"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:nvjpeg",
+    ],
+)

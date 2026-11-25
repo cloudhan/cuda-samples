@@ -1,0 +1,27 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "matrixMul_nvrtc",
+    cc_srcs = [
+        "matrixMul.cpp",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "//bzl:cccl_nv_target",
+        "@cuda//:cccl_all_files",
+        "@cuda//:cuda.h",
+        "@cuda//:cudart_all_files",
+        "matrixMul_kernel.cu",
+    ],
+    env = {
+        "CUDA_CCCL_TARGET": "$(rootpath //bzl:cccl_nv_target)",
+        "CUDA_HEADER_PATH": "$(rootpath @cuda//:cuda.h)",
+    },
+    deps = [
+        "//Common:helpers",
+        "//bzl:nvrtc_builtins",
+        "@cuda//:cuda",
+        "@cuda//:nvrtc",
+    ],
+)

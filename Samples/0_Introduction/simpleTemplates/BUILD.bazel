@@ -1,0 +1,17 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleTemplates",
+    cu_srcs = [
+        "simpleTemplates.cu",
+    ],
+    hdrs = [
+        "sharedmem.cuh",
+    ],
+    includes = ["."],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

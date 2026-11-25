@@ -1,0 +1,14 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "p2pBandwidthLatencyTest",
+    cu_srcs = [
+        "p2pBandwidthLatencyTest.cu",
+    ],
+    includes = ["."],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

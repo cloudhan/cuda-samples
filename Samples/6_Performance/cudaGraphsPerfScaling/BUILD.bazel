@@ -1,0 +1,18 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "cudaGraphsPerfScaling",
+    cu_srcs = [
+        "cudaGraphPerfScaling.cu",
+    ],
+    includes = ["."],
+    data = [
+        "dataCollection.bash",
+    ],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:nvtx3",
+    ],
+)

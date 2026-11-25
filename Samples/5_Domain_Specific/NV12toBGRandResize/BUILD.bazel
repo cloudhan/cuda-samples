@@ -1,0 +1,30 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "NV12toBGRandResize",
+    cu_srcs = [
+        "bgr_resize.cu",
+        "nv12_resize.cu",
+        "nv12_to_bgr_planar.cu",
+        "utils.cu",
+    ],
+    cc_srcs = [
+        "resize_convert_main.cpp",
+    ],
+    hdrs = [
+        "resize_convert.h",
+        "utils.h",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "data/test1280x720.nv12",
+        "data/test1920x1080.nv12",
+        "data/test640x480.nv12",
+    ],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)
