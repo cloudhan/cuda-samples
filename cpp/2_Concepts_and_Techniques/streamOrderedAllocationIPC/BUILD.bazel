@@ -1,0 +1,14 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "streamOrderedAllocationIPC",
+    cu_srcs = [
+        "streamOrderedAllocationIPC.cu",
+    ],
+    includes = ["."],
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cuda",
+    ],
+)

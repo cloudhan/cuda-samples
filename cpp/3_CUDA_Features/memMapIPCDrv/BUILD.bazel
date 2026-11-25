@@ -1,0 +1,25 @@
+load("//bzl:cuda_kernel.bzl", "cuda_kernel", "cuda_sample_binary")
+
+cuda_kernel(
+    name = "memMapIpc_kernel64_ptx",
+    src = "memMapIpc_kernel.cu",
+    out = "memMapIpc_kernel64.ptx",
+    mode = "ptx",
+    deps = ["//Common:helpers"],
+)
+
+cuda_sample_binary(
+    name = "memMapIPCDrv",
+    cc_srcs = [
+        "memMapIpc.cpp",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        ":memMapIpc_kernel64_ptx",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cuda",
+    ],
+)

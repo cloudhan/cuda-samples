@@ -1,0 +1,21 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "histogram",
+    cu_srcs = [
+        "histogram256.cu",
+        "histogram64.cu",
+    ],
+    cc_srcs = [
+        "histogram_gold.cpp",
+        "main.cpp",
+    ],
+    hdrs = [
+        "histogram_common.h",
+    ],
+    includes = ["."],
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

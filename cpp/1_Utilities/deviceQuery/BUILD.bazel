@@ -1,0 +1,12 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "deviceQuery",
+    cc_srcs = [
+        "deviceQuery.cpp",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

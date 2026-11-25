@@ -1,0 +1,14 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "globalToShmemAsyncCopy",
+    cu_srcs = [
+        "globalToShmemAsyncCopy.cu",
+    ],
+    includes = ["."],
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:libcudacxx",
+    ],
+)

@@ -1,0 +1,17 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "dmabufInterop",
+    cu_srcs = [
+        "dmabufInterop.cu",
+    ],
+    hdrs = [
+        "dmabufInterop_helpers.h",
+    ],
+    includes = ["."],
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cuda",
+    ],
+)

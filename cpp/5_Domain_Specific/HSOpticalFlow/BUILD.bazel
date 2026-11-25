@@ -1,0 +1,35 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "HSOpticalFlow",
+    cu_srcs = [
+        "flowCUDA.cu",
+    ],
+    cc_srcs = [
+        "flowGold.cpp",
+        "main.cpp",
+    ],
+    hdrs = [
+        "addKernel.cuh",
+        "common.h",
+        "derivativesKernel.cuh",
+        "downscaleKernel.cuh",
+        "flowCUDA.h",
+        "flowGold.h",
+        "solverKernel.cuh",
+        "upscaleKernel.cuh",
+        "warpingKernel.cuh",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "FlowCPU.flo",
+        "FlowGPU.flo",
+        "data/frame10.ppm",
+        "data/frame11.ppm",
+    ],
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

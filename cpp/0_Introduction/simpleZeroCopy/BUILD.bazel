@@ -1,0 +1,13 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleZeroCopy",
+    cu_srcs = [
+        "simpleZeroCopy.cu",
+    ],
+    includes = ["."],
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)
