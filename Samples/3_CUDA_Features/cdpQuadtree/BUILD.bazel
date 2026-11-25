@@ -1,0 +1,14 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "cdpQuadtree",
+    cu_srcs = [
+        "cdpQuadtree.cu",
+    ],
+    includes = ["."],
+    rdc = True,
+    deps = [
+        "//Common:helpers",
+        "@cuda//:thrust",
+    ],
+)

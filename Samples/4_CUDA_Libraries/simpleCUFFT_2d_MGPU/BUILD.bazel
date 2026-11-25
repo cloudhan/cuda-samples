@@ -1,0 +1,13 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleCUFFT_2d_MGPU",
+    cu_srcs = [
+        "simpleCUFFT_2d_MGPU.cu",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cufft",
+    ],
+)

@@ -1,0 +1,20 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "stereoDisparity",
+    cu_srcs = [
+        "stereoDisparity.cu",
+    ],
+    hdrs = [
+        "stereoDisparity_kernel.cuh",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "data/stereo.im0.640x533.ppm",
+        "data/stereo.im1.640x533.ppm",
+    ],
+    deps = [
+        "//Common:helpers",
+    ],
+)

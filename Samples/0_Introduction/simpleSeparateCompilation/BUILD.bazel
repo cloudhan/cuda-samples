@@ -1,0 +1,17 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleSeparateCompilation",
+    cu_srcs = [
+        "simpleDeviceLibrary.cu",
+        "simpleSeparateCompilation.cu",
+    ],
+    hdrs = [
+        "simpleDeviceLibrary.cuh",
+    ],
+    includes = ["."],
+    rdc = True,
+    deps = [
+        "//Common:helpers",
+    ],
+)

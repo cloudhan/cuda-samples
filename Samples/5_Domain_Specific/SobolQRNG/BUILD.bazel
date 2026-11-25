@@ -1,0 +1,23 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "SobolQRNG",
+    cu_srcs = [
+        "sobol_gpu.cu",
+    ],
+    cc_srcs = [
+        "sobol.cpp",
+        "sobol_gold.cpp",
+        "sobol_primitives.cpp",
+    ],
+    hdrs = [
+        "sobol.h",
+        "sobol_gold.h",
+        "sobol_gpu.h",
+        "sobol_primitives.h",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

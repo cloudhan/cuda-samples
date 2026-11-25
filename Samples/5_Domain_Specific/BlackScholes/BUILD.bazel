@@ -1,0 +1,18 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "BlackScholes",
+    cu_srcs = [
+        "BlackScholes.cu",
+    ],
+    cc_srcs = [
+        "BlackScholes_gold.cpp",
+    ],
+    hdrs = [
+        "BlackScholes_kernel.cuh",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

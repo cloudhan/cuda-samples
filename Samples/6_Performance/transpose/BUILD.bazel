@@ -1,0 +1,12 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "transpose",
+    cu_srcs = [
+        "transpose.cu",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

@@ -1,0 +1,15 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleCUFFT_callback",
+    cu_srcs = [
+        "simpleCUFFT_callback.cu",
+    ],
+    includes = ["."],
+    rdc = True,
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cufft_static",
+        "@cuda//:culibos_a",
+    ],
+)

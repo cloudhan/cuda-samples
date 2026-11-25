@@ -1,0 +1,24 @@
+load("//bzl:cuda_kernel.bzl", "cuda_kernel", "cuda_sample_binary")
+
+cuda_kernel(
+    name = "threadMigration_kernel64_fatbin",
+    src = "threadMigration_kernel.cu",
+    out = "threadMigration_kernel64.fatbin",
+    mode = "fatbin",
+    deps = ["//Common:helpers"],
+)
+
+cuda_sample_binary(
+    name = "threadMigration",
+    cc_srcs = [
+        "threadMigration.cpp",
+    ],
+    includes = ["."],
+    data = [
+        ":threadMigration_kernel64_fatbin",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cuda",
+    ],
+)

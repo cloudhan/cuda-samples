@@ -1,0 +1,23 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleAtomicIntrinsics_nvrtc",
+    cc_srcs = [
+        "simpleAtomicIntrinsics.cpp",
+        "simpleAtomicIntrinsics_cpu.cpp",
+    ],
+    hdrs = [
+        "simpleAtomicIntrinsics_kernel.cuh",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "simpleAtomicIntrinsics_kernel.cuh",
+    ],
+    deps = [
+        "//Common:helpers",
+        "//bzl:nvrtc_builtins",
+        "@cuda//:cuda",
+        "@cuda//:nvrtc",
+    ],
+)

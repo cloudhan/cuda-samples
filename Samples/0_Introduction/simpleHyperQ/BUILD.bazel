@@ -1,0 +1,12 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleHyperQ",
+    cu_srcs = [
+        "simpleHyperQ.cu",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)
