@@ -1,0 +1,23 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "MC_EstimatePiInlineQ",
+    cu_srcs = [
+        "src/piestimator.cu",
+    ],
+    cc_srcs = [
+        "src/main.cpp",
+        "src/test.cpp",
+    ],
+    hdrs = [
+        "inc/cudasharedmem.h",
+        "inc/piestimator.h",
+        "inc/test.h",
+    ],
+    includes = [".", "inc", "src"],
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:curand",
+    ],
+)

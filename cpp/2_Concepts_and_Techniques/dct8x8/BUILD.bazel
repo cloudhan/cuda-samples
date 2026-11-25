@@ -1,0 +1,36 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "dct8x8",
+    cu_srcs = [
+        "dct8x8.cu",
+    ],
+    cc_srcs = [
+        "BmpUtil.cpp",
+        "DCT8x8_Gold.cpp",
+    ],
+    hdrs = [
+        "BmpUtil.h",
+        "Common.h",
+        "DCT8x8_Gold.h",
+        "dct8x8_kernel1.cuh",
+        "dct8x8_kernel2.cuh",
+        "dct8x8_kernel_quantization.cuh",
+        "dct8x8_kernel_short.cuh",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "data/teapot512.bmp",
+        "data/teapot512.ppm",
+        "teapot512_cuda1.bmp",
+        "teapot512_cuda2.bmp",
+        "teapot512_cuda_short.bmp",
+        "teapot512_gold1.bmp",
+        "teapot512_gold2.bmp",
+    ],
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

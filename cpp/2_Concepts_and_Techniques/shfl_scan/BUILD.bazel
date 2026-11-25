@@ -1,0 +1,17 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "shfl_scan",
+    cu_srcs = [
+        "shfl_scan.cu",
+    ],
+    hdrs = [
+        "shfl_integral_image.cuh",
+        "util.h",
+    ],
+    includes = ["."],
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

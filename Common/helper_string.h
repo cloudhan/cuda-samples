@@ -287,6 +287,22 @@ inline char *sdkFindFilePath(const char *filename,
   const char *searchPath[] = {
       "./",                                           // same dir
       "./data/",                                      // same dir
+      "cpp/0_Introduction/<executable_name>/",
+      "cpp/1_Utilities/<executable_name>/",
+      "cpp/2_Concepts_and_Techniques/<executable_name>/",
+      "cpp/3_CUDA_Features/<executable_name>/",
+      "cpp/4_CUDA_Libraries/<executable_name>/",
+      "cpp/5_Domain_Specific/<executable_name>/",
+      "cpp/6_Performance/<executable_name>/",
+      "cpp/0_Introduction/<executable_name>/data/",
+      "cpp/1_Utilities/<executable_name>/data/",
+      "cpp/2_Concepts_and_Techniques/<executable_name>/data/",
+      "cpp/3_CUDA_Features/<executable_name>/data/",
+      "cpp/4_CUDA_Libraries/<executable_name>/data/",
+      "cpp/5_Domain_Specific/<executable_name>/data/",
+      "cpp/6_Performance/<executable_name>/data/",
+      "Common/data/",
+
 
       "../../../../cpp/<executable_name>/",       // up 4 in tree
       "../../../cpp/<executable_name>/",          // up 3 in tree
@@ -423,6 +439,21 @@ inline char *sdkFindFilePath(const char *filename,
 
     if (fp) {
       fclose(fp);
+    }
+  }
+  if (const char *hdr = getenv("CUDA_HEADER_PATH")) {
+    std::string p(hdr);
+    size_t pos = p.find_last_of("/\\");
+    if (pos != std::string::npos) {
+      p = p.substr(0, pos + 1) + filename;
+      FILE *fp = NULL;
+      FOPEN(fp, p.c_str(), "rb");
+      if (fp != NULL) {
+        fclose(fp);
+        char *res = (char *)malloc(p.size() + 1);
+        strcpy(res, p.c_str());
+        return res;
+      }
     }
   }
 

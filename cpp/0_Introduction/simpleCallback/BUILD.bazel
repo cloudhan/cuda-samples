@@ -1,0 +1,14 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleCallback",
+    cu_srcs = [
+        "simpleCallback.cu",
+    ],
+    includes = ["."],
+    copts = ["--extended-lambda"],
+    linkopts = ["-lpthread"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

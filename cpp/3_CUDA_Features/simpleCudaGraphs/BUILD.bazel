@@ -1,0 +1,29 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleCudaGraphs_capture",
+    cu_srcs = ["simpleCudaGraphs_capture.cu"],
+    hdrs = [
+        "simpleCudaGraphs.cuh",
+    ],
+    includes = ["."],
+    rdc = True,
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cub",
+    ],
+)
+
+cuda_sample_binary(
+    name = "simpleCudaGraphs_explicit",
+    cu_srcs = ["simpleCudaGraphs_explicit.cu"],
+    hdrs = [
+        "simpleCudaGraphs.cuh",
+    ],
+    includes = ["."],
+    rdc = True,
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cub",
+    ],
+)

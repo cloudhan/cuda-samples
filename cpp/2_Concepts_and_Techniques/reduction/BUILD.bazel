@@ -1,0 +1,19 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "reduction",
+    cu_srcs = [
+        "reduction_kernel.cu",
+    ],
+    cc_srcs = [
+        "reduction.cpp",
+    ],
+    hdrs = [
+        "reduction.h",
+    ],
+    includes = ["."],
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

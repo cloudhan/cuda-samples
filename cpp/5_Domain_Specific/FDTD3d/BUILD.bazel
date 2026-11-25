@@ -1,0 +1,23 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "FDTD3d",
+    cu_srcs = [
+        "src/FDTD3dGPU.cu",
+    ],
+    cc_srcs = [
+        "src/FDTD3d.cpp",
+        "src/FDTD3dReference.cpp",
+    ],
+    hdrs = [
+        "inc/FDTD3d.h",
+        "inc/FDTD3dGPU.h",
+        "inc/FDTD3dGPUKernel.cuh",
+        "inc/FDTD3dReference.h",
+    ],
+    includes = [".", "inc", "src"],
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

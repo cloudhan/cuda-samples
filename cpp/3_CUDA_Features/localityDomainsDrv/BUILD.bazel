@@ -1,0 +1,13 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "localityDomainsDrv",
+    cc_srcs = [
+        "localityDomainsDrv.cpp",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cuda",
+    ],
+)

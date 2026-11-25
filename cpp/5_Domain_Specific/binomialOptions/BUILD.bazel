@@ -1,0 +1,21 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "binomialOptions",
+    cu_srcs = [
+        "binomialOptions_kernel.cu",
+    ],
+    cc_srcs = [
+        "binomialOptions.cpp",
+        "binomialOptions_gold.cpp",
+    ],
+    hdrs = [
+        "binomialOptions_common.h",
+        "realtype.h",
+    ],
+    includes = ["."],
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

@@ -1,0 +1,22 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "convolutionFFT2D",
+    cu_srcs = [
+        "convolutionFFT2D.cu",
+    ],
+    cc_srcs = [
+        "convolutionFFT2D_gold.cpp",
+        "main.cpp",
+    ],
+    hdrs = [
+        "convolutionFFT2D.cuh",
+        "convolutionFFT2D_common.h",
+    ],
+    includes = ["."],
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cufft",
+    ],
+)
