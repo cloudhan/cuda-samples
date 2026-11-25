@@ -146,6 +146,17 @@ def cuda_sample_binary(
         env = env,
     )
 
+    cuda_sample_test(
+        name = name + "_test",
+        binary = ":" + name,
+        data = data,
+        sample_args = args,
+        sample_env = env,
+        size = "medium",
+        timeout = "moderate",
+        tags = ["gpu", "local"],
+    )
+
 
 def _nvrtc_builtins_impl(ctx):
     cc_toolchain = find_cpp_toolchain(ctx)
@@ -205,4 +216,62 @@ cccl_nv_target = rule(
     attrs = {
         "cccl_all_files": attr.label(default = Label("@cuda//:cccl_all_files")),
     },
+)
+
+def _cuda_sample_test_impl(ctx):
+    script = ctx.actions.declare_file(ctx.label.name + ".sh")
+    bin_file = ctx.executable.binary
+    bin_rpath = "./" + bin_file.short_path
+
+    env_lines = []
+    for k, v in ctx.attr.sample_env.items():
+        expanded = ctx.expand_location(v, ctx.attr.data)
+        env_lines.append('export {}="{}"'.format(k, expanded.replace('"', '\\"')))
+
+    arg_items = []
+    for a in ctx.attr.sample_args:
+        expanded = ctx.expand_location(a, ctx.attr.data)
+        arg_items.append('"{}"'.format(expanded.replace('"', '\\"')))
+
+    content = """#!/usr/bin/env bash
+set -uo pipefail
+{env_block}
+BIN="{bin_path}"
+out=$(mktemp)
+trap 'rm -f "$out"' EXIT
+"$BIN" {args_str} 2>&1 | tee "$out"
+rc=${{PIPESTATUS[0]}}
+if [ "$rc" -eq 0 ]; then
+  exit 0
+fi
+if [ "$rc" -eq 2 ] && grep -qiE '(waiv|two gpus|two or more gpus)' "$out"; then
+  echo "[WAIVED] $BIN exited with code 2 (EXIT_WAIVED)"
+  exit 0
+fi
+exit "$rc"
+""".format(
+        env_block = "\n".join(env_lines),
+        bin_path = bin_rpath,
+        args_str = " ".join(arg_items),
+    )
+
+    ctx.actions.write(
+        output = script,
+        content = content,
+        is_executable = True,
+    )
+
+    runfiles = ctx.runfiles(files = ctx.files.data + [bin_file])
+    runfiles = runfiles.merge(ctx.attr.binary[DefaultInfo].default_runfiles)
+    return [DefaultInfo(executable = script, runfiles = runfiles)]
+
+cuda_sample_test = rule(
+    implementation = _cuda_sample_test_impl,
+    attrs = {
+        "binary": attr.label(executable = True, cfg = "target", mandatory = True),
+        "data": attr.label_list(allow_files = True),
+        "sample_args": attr.string_list(),
+        "sample_env": attr.string_dict(),
+    },
+    test = True,
 )
