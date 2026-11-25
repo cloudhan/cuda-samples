@@ -143,6 +143,17 @@ void compileFileToCUBIN(char *filename, int argc, char **argv, char **cubinResul
              compileOptions.c_str());
 #endif
     numCompileOptions++;
+    if (const char *cccl_env = getenv("CUDA_CCCL_TARGET")) {
+      std::string p(cccl_env);
+      std::size_t pos = p.rfind("/nv/target");
+      if (pos != std::string::npos) {
+        std::string cccl_opt = std::string("--include-path=") + p.substr(0, pos);
+        compileParams[numCompileOptions] = reinterpret_cast<char *>(malloc(cccl_opt.size() + 1));
+        strcpy(compileParams[numCompileOptions], cccl_opt.c_str());
+        numCompileOptions++;
+      }
+    }
+
   }
 
   // compile

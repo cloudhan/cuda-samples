@@ -1,0 +1,19 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "boxFilterNPP",
+    cc_srcs = [
+        "boxFilterNPP.cpp",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "teapot512.pgm",
+    ],
+    deps = [
+        "//Common:UtilNpp",
+        "//Common:helpers",
+        "@FreeImage",
+        "@cuda//:npp",
+    ],
+)

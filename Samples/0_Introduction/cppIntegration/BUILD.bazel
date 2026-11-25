@@ -1,0 +1,16 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "cppIntegration",
+    cu_srcs = [
+        "cppIntegration.cu",
+    ],
+    cc_srcs = [
+        "cppIntegration_gold.cpp",
+        "main.cpp",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

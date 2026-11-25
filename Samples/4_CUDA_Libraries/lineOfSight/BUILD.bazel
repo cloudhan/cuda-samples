@@ -1,0 +1,13 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "lineOfSight",
+    cu_srcs = [
+        "lineOfSight.cu",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:thrust",
+    ],
+)

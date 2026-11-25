@@ -1,0 +1,17 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleTexture",
+    cu_srcs = [
+        "simpleTexture.cu",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "data/ref_rotated.pgm",
+        "data/teapot512.pgm",
+    ],
+    deps = [
+        "//Common:helpers",
+    ],
+)

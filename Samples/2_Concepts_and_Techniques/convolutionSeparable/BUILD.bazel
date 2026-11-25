@@ -1,0 +1,19 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "convolutionSeparable",
+    cu_srcs = [
+        "convolutionSeparable.cu",
+    ],
+    cc_srcs = [
+        "convolutionSeparable_gold.cpp",
+        "main.cpp",
+    ],
+    hdrs = [
+        "convolutionSeparable_common.h",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+    ],
+)

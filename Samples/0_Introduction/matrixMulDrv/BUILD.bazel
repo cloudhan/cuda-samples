@@ -1,0 +1,30 @@
+load("//bzl:cuda_kernel.bzl", "cuda_kernel", "cuda_sample_binary")
+
+cuda_kernel(
+    name = "matrixMul_kernel64_fatbin",
+    src = "matrixMul_kernel.cu",
+    hdrs = [
+        "matrixMul.h",
+    ],
+    out = "matrixMul_kernel64.fatbin",
+    mode = "fatbin",
+    deps = ["//Common:helpers"],
+)
+
+cuda_sample_binary(
+    name = "matrixMulDrv",
+    cc_srcs = [
+        "matrixMulDrv.cpp",
+    ],
+    hdrs = [
+        "matrixMul.h",
+    ],
+    includes = ["."],
+    data = [
+        ":matrixMul_kernel64_fatbin",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cuda",
+    ],
+)
