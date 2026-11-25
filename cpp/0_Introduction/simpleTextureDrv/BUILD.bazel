@@ -1,0 +1,28 @@
+load("//bzl:cuda_kernel.bzl", "cuda_kernel", "cuda_sample_binary")
+
+cuda_kernel(
+    name = "simpleTexture_kernel64_fatbin",
+    src = "simpleTexture_kernel.cu",
+    out = "simpleTexture_kernel64.fatbin",
+    mode = "fatbin",
+    deps = ["//Common:helpers"],
+)
+
+cuda_sample_binary(
+    name = "simpleTextureDrv",
+    cc_srcs = [
+        "simpleTextureDrv.cpp",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        ":simpleTexture_kernel64_fatbin",
+        "data/ref_rotated.pgm",
+        "data/teapot512.pgm",
+        "data/teapot512_out.pgm",
+    ],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cuda",
+    ],
+)

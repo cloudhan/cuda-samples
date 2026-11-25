@@ -1,0 +1,11 @@
+load(":cuda_kernel.bzl", "cccl_nv_target", "nvrtc_builtins")
+
+nvrtc_builtins(
+    name = "nvrtc_builtins",
+    visibility = ["//visibility:public"],
+)
+
+cccl_nv_target(
+    name = "cccl_nv_target",
+    visibility = ["//visibility:public"],
+)

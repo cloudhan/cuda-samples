@@ -1,0 +1,16 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "jitLto",
+    cc_srcs = [
+        "jitLto.cpp",
+    ],
+    includes = ["."],
+    deps = [
+        "//Common:helpers",
+        "//bzl:nvrtc_builtins",
+        "@cuda//:cuda",
+        "@cuda//:nvjitlink",
+        "@cuda//:nvrtc",
+    ],
+)

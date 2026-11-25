@@ -1,0 +1,32 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "matrixMulDynlinkJIT",
+    cc_srcs = [
+        "cuda_drvapi_dynlink.c",
+        "matrixMulDynlinkJIT.cpp",
+        "matrixMul_gold.cpp",
+        "matrixMul_kernel_32_ptxdump.c",
+        "matrixMul_kernel_64_ptxdump.c",
+    ],
+    hdrs = [
+        "cuda_drvapi_dynlink.h",
+        "cuda_drvapi_dynlink_cuda.h",
+        "helper_cuda_drvapi.h",
+        "matrixMul.h",
+        "matrixMul_kernel_32_ptxdump.h",
+        "matrixMul_kernel_64_ptxdump.h",
+    ],
+    includes = ["."],
+    data = [
+        "extras/README.TXT",
+        "extras/matrixMul_kernel_32.ptx",
+        "extras/matrixMul_kernel_64.ptx",
+        "extras/ptx2c.py",
+    ],
+    linkopts = ["-ldl"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cuda",
+    ],
+)

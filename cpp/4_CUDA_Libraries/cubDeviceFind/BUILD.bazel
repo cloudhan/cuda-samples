@@ -1,0 +1,17 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "cubDeviceFind",
+    cu_srcs = [
+        "cubDeviceFind.cu",
+    ],
+    includes = ["."],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:cub",
+        "@cuda//:libcudacxx",
+        "@cuda//:thrust",
+    ],
+)
