@@ -1,0 +1,17 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "histEqualizationNPP",
+    cc_srcs = [
+        "histEqualizationNPP.cpp",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+    ],
+    deps = [
+        "//Common:UtilNpp",
+        "//Common:helpers",
+        "@cuda//:npp",
+    ],
+)

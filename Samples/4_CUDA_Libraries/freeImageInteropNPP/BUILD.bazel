@@ -1,0 +1,18 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "freeImageInteropNPP",
+    cc_srcs = [
+        "freeImageInteropNPP.cpp",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+    ],
+    deps = [
+        "//Common:UtilNpp",
+        "//Common:helpers",
+        "@FreeImage",
+        "@cuda//:npp",
+    ],
+)

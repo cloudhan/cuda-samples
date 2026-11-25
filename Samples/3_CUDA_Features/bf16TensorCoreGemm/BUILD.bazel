@@ -1,0 +1,15 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "bf16TensorCoreGemm",
+    cu_srcs = [
+        "bf16TensorCoreGemm.cu",
+    ],
+    includes = ["."],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+        "@cuda//:libcudacxx",
+    ],
+)

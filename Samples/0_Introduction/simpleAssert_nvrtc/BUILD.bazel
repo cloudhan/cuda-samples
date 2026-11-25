@@ -1,0 +1,19 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleAssert_nvrtc",
+    cc_srcs = [
+        "simpleAssert.cpp",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "simpleAssert_kernel.cu",
+    ],
+    deps = [
+        "//Common:helpers",
+        "//bzl:nvrtc_builtins",
+        "@cuda//:cuda",
+        "@cuda//:nvrtc",
+    ],
+)

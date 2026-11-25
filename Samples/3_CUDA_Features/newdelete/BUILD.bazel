@@ -1,0 +1,17 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "newdelete",
+    cu_srcs = [
+        "newdelete.cu",
+    ],
+    hdrs = [
+        "container.hpp",
+    ],
+    includes = ["."],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)

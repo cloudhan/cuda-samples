@@ -1,0 +1,19 @@
+load("//bzl:cuda_kernel.bzl", "cuda_sample_binary")
+
+cuda_sample_binary(
+    name = "simpleSurfaceWrite",
+    cu_srcs = [
+        "simpleSurfaceWrite.cu",
+    ],
+    includes = ["."],
+    data = [
+        "//Common:data",
+        "data/ref_rotated.pgm",
+        "data/teapot512.pgm",
+    ],
+    rdc = True,
+    copts = ["--extended-lambda"],
+    deps = [
+        "//Common:helpers",
+    ],
+)
