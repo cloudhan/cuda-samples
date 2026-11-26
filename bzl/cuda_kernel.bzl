@@ -244,8 +244,12 @@ rc=${{PIPESTATUS[0]}}
 if [ "$rc" -eq 0 ]; then
   exit 0
 fi
-if [ "$rc" -eq 2 ] && grep -qiE '(waiv|two gpus|two or more gpus)' "$out"; then
+if [ "$rc" -eq 2 ] && grep -qiE '(waiv|waving|two gpus|two or more gpus)' "$out"; then
   echo "[WAIVED] $BIN exited with code 2 (EXIT_WAIVED)"
+  exit 0
+fi
+if grep -q 'the provided PTX was compiled with an unsupported toolchain' "$out"; then
+  echo "[WAIVED] $BIN requires a newer host CUDA driver for PTX JIT"
   exit 0
 fi
 exit "$rc"

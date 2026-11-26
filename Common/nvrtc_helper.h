@@ -73,7 +73,7 @@ void compileFileToCUBIN(char *filename, int argc, char **argv, char **cubinResul
 
   int numCompileOptions = 0;
 
-  char *compileParams[2];
+  char *compileParams[4];
 
   int major = 0, minor = 0;
   char deviceName[256];
